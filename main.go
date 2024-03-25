@@ -13,15 +13,15 @@ func main() {
 	form := tview.NewForm()
 
 	menuItems := []MenuItem{
-		&HoneygainItem{"Honeygain", "Earn passive income by sharing your internet connection", HoneygainConfig{}, false},
-		&EarnAppItem{"EarnApp", "Earn passive income by sharing your internet connection", EarnAppConfig{}, false},
-		&PawnsAppItem{"PawnsApp", "Earn passive income by sharing your internet connection", PawnsAppConfig{}, false},
+		{"Honeygain", "Earn passive income by sharing your internet connection", HoneygainConfig{}},
+		{"EarnApp", "Earn passive income by sharing your internet connection", EarnAppConfig{}},
+		{"PawnsApp", "Earn passive income by sharing your internet connection", PawnsAppConfig{}},
 	}
 
 	for _, item := range menuItems {
 		list.AddItem(item.GetName(), item.GetDescription(), 0, func() {
 			form.Clear(true)
-			item.ConfigureForm(form, list, app)
+			item.Config.ConfigureForm(form, list, app)
 			app.SetRoot(form, true)
 		})
 	}

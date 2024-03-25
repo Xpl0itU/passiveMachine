@@ -15,35 +15,21 @@ type HoneygainConfig struct {
 	DeviceName string
 	Email      string
 	Password   string
+	Configured bool
 }
 
-type HoneygainItem struct {
-	Name        string
-	Description string
-	Config      HoneygainConfig
-	Configured  bool
-}
-
-func (i *HoneygainItem) GetName() string {
-	return i.Name
-}
-
-func (i *HoneygainItem) GetDescription() string {
-	return i.Description
-}
-
-func (i *HoneygainItem) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	email := ""
 	password := ""
 	deviceName := ""
 	isError := false
-	form.AddInputField("Device Name", i.Config.DeviceName, 15, nil, func(text string) {
+	form.AddInputField("Device Name", i.DeviceName, 15, nil, func(text string) {
 		deviceName = text
 	})
-	form.AddInputField("Email", i.Config.Email, 50, nil, func(text string) {
+	form.AddInputField("Email", i.Email, 50, nil, func(text string) {
 		email = text
 	})
-	form.AddPasswordField("Password", i.Config.Password, 20, '*', func(text string) {
+	form.AddPasswordField("Password", i.Password, 20, '*', func(text string) {
 		password = text
 	})
 	form.AddButton("Save", func() {
@@ -52,9 +38,9 @@ func (i *HoneygainItem) ConfigureForm(form *tview.Form, list *tview.List, app *t
 			isError = true
 			return
 		}
-		i.Config.Email = email
-		i.Config.Password = password
-		i.Config.DeviceName = deviceName
+		i.Email = email
+		i.Password = password
+		i.DeviceName = deviceName
 		i.Configured = true
 		returnToMenu(list, app)
 	})
@@ -63,7 +49,7 @@ func (i *HoneygainItem) ConfigureForm(form *tview.Form, list *tview.List, app *t
 	})
 }
 
-func (i *HoneygainItem) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i HoneygainConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `honeygain:
@@ -71,7 +57,7 @@ func (i *HoneygainItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
   restart: unless-stopped
   environment:
 	- HONEYGAIN_DUMMY=''
-  command: -tou-accept -email ` + i.Config.Email + ` -pass ` + i.Config.Password + ` -device ` + i.Config.DeviceName + "\n", nil
+  command: -tou-accept -email ` + i.Email + ` -pass ` + i.Password + ` -device ` + i.DeviceName + "\n", nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		hostConfig := &container.HostConfig{
 			RestartPolicy: container.RestartPolicy{
@@ -86,11 +72,11 @@ func (i *HoneygainItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
 			Cmd: []string{
 				"-tou-accept",
 				"-email",
-				i.Config.Email,
+				i.Email,
 				"-pass",
-				i.Config.Password,
+				i.Password,
 				"-device",
-				i.Config.DeviceName,
+				i.DeviceName,
 			},
 		}
 		return "", createContainer("honeygain", containerConfig, hostConfig, logView)
@@ -99,6 +85,6 @@ func (i *HoneygainItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
 	}
 }
 
-func (i *HoneygainItem) IsConfigured() bool {
+func (i HoneygainConfig) IsConfigured() bool {
 	return i.Configured
 }

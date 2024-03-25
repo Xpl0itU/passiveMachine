@@ -18,28 +18,14 @@ const (
 )
 
 type EarnAppConfig struct {
-	UUID string
+	UUID       string
+	Configured bool
 }
 
-type EarnAppItem struct {
-	Name        string
-	Description string
-	Config      EarnAppConfig
-	Configured  bool
-}
-
-func (i *EarnAppItem) GetName() string {
-	return i.Name
-}
-
-func (i *EarnAppItem) GetDescription() string {
-	return i.Description
-}
-
-func (i *EarnAppItem) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	uuid := ""
 	isError := false
-	form.AddInputField("UUID", i.Config.UUID, 50, nil, func(text string) {
+	form.AddInputField("UUID", i.UUID, 50, nil, func(text string) {
 		uuid = text
 	})
 	form.AddButton("Generate UUID", func() {
@@ -64,7 +50,7 @@ func (i *EarnAppItem) ConfigureForm(form *tview.Form, list *tview.List, app *tvi
 			isError = true
 			return
 		}
-		i.Config.UUID = uuid
+		i.UUID = uuid
 		i.Configured = true
 		returnToMenu(list, app)
 	})
@@ -73,13 +59,13 @@ func (i *EarnAppItem) ConfigureForm(form *tview.Form, list *tview.List, app *tvi
 	})
 }
 
-func (i *EarnAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `earnapp:
   image: ` + EARNAPP_IMAGE_NAME + `
   environment:
-    - EARNAPP_UUID=` + i.Config.UUID + `
+    - EARNAPP_UUID=` + i.UUID + `
     - EARNAPP_TERM="yes"
   volumes:
     - earnapp-data:/etc/earnapp
@@ -89,7 +75,7 @@ func (i *EarnAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Text
 		containerConfig := &container.Config{
 			Image: EARNAPP_IMAGE_NAME,
 			Env: []string{
-				"EARNAPP_UUID=" + i.Config.UUID,
+				"EARNAPP_UUID=" + i.UUID,
 				"EARNAPP_TERM=yes",
 			},
 		}
@@ -111,7 +97,7 @@ func (i *EarnAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Text
 	}
 }
 
-func (i *EarnAppItem) IsConfigured() bool {
+func (i EarnAppConfig) IsConfigured() bool {
 	return i.Configured
 }
 
