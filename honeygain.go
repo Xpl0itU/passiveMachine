@@ -19,7 +19,7 @@ type HoneygainConfig struct {
 	Configured bool
 }
 
-func (i *HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *HoneygainConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application) {
 	email := ""
 	password := ""
 	deviceName := ""
@@ -47,10 +47,10 @@ func (i *HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app 
 		i.Password = password
 		i.DeviceName = deviceName
 		i.Configured = true
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Cancel", func() {
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
 		webbrowser.Open("https://r.honeygain.me/SAMUEC73")

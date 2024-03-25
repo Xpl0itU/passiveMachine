@@ -6,11 +6,15 @@ import (
 )
 
 func main() {
-	app := tview.NewApplication()
+	app := tview.NewApplication().EnablePaste(true)
 
 	list := tview.NewList()
 
 	form := tview.NewForm()
+
+	frame := tview.NewFrame(list).
+		AddText("Passive Machine", true, tview.AlignCenter, tview.Styles.PrimaryTextColor).
+		AddText("Tip: Use the Register button to sign up for the service", true, tview.AlignCenter, tview.Styles.ContrastSecondaryTextColor)
 
 	menuItems := []MenuItem{
 		{"Honeygain", "Earn passive income by sharing your internet connection", &HoneygainConfig{}},
@@ -25,7 +29,7 @@ func main() {
 	for _, item := range menuItems {
 		list.AddItem(item.GetName(), item.GetDescription(), 0, func() {
 			form.Clear(true)
-			item.Config.ConfigureForm(form, list, app)
+			item.Config.ConfigureForm(form, frame, app)
 			app.SetRoot(form, true)
 		})
 	}
@@ -42,7 +46,7 @@ func main() {
 			}
 		})
 		form.AddButton("Return", func() {
-			returnToMenu(list, app)
+			returnToMenu(frame, app)
 		})
 		app.SetRoot(form, true)
 	})
@@ -61,9 +65,9 @@ func main() {
 			}
 		}
 		form.AddButton("Return", func() {
-			returnToMenu(list, app)
+			returnToMenu(frame, app)
 		})
 		app.SetRoot(form, true)
 	})
-	app.SetRoot(list, true).Run()
+	app.SetRoot(frame, true).Run()
 }

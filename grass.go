@@ -18,7 +18,7 @@ type GrassConfig struct {
 	Configured bool
 }
 
-func (i *GrassConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *GrassConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application) {
 	email := ""
 	password := ""
 	isError := false
@@ -41,10 +41,10 @@ func (i *GrassConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tvi
 		i.Email = email
 		i.Password = password
 		i.Configured = true
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Cancel", func() {
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
 		webbrowser.Open("https://app.getgrass.io/register/?referralCode=u154dPm508iVxXy")

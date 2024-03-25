@@ -19,7 +19,7 @@ type EarnAppConfig struct {
 	Configured bool
 }
 
-func (i *EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *EarnAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application) {
 	uuid := ""
 	isError := false
 	showingError := false
@@ -54,10 +54,10 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *t
 		}
 		i.UUID = uuid
 		i.Configured = true
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Cancel", func() {
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
 		webbrowser.Open("https://earnapp.com/i/J9XF4PXJ")

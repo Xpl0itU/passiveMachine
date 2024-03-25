@@ -17,7 +17,7 @@ type Peer2ProfitConfig struct {
 	Configured bool
 }
 
-func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application) {
 	email := ""
 	isError := false
 	showingError := false
@@ -35,10 +35,10 @@ func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, list *tview.List, ap
 		}
 		i.Email = email
 		i.Configured = true
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Cancel", func() {
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
 		webbrowser.Open("https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c")

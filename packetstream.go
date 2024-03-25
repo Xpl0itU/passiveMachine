@@ -17,7 +17,7 @@ type PacketStreamConfig struct {
 	Configured bool
 }
 
-func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application) {
 	cid := ""
 	isError := false
 	showingError := false
@@ -35,10 +35,10 @@ func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, list *tview.List, a
 		}
 		i.CID = cid
 		i.Configured = true
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Cancel", func() {
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
 		webbrowser.Open("https://packetstream.io/?psr=4cRE")

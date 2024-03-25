@@ -3,7 +3,7 @@ package main
 import "github.com/rivo/tview"
 
 type MenuItemConfig interface {
-	ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application)
+	ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application)
 	ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error)
 	IsConfigured() bool
 }
@@ -22,6 +22,6 @@ func (i *MenuItem) GetDescription() string {
 	return i.Description
 }
 
-func returnToMenu(list *tview.List, app *tview.Application) {
-	app.SetRoot(list, true)
+func returnToMenu(frame *tview.Frame, app *tview.Application) {
+	app.SetRoot(frame, true)
 }

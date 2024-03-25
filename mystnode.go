@@ -17,17 +17,17 @@ type MystConfig struct {
 	Configured bool
 }
 
-func (i *MystConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *MystConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application) {
 	enabled := i.Configured
 	form.AddCheckbox("Enable Myst", i.Configured, func(checked bool) {
 		enabled = checked
 	})
 	form.AddButton("Save", func() {
 		i.Configured = enabled
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Cancel", func() {
-		returnToMenu(list, app)
+		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
 		webbrowser.Open("https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6")
