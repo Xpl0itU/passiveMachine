@@ -14,6 +14,7 @@ func main() {
 
 	menuItems := []MenuItem{
 		&HoneygainItem{"Honeygain", "Earn passive income by sharing your internet connection", HoneygainConfig{}},
+		&EarnAppItem{"EarnApp", "Earn passive income by sharing your internet connection", EarnAppConfig{}},
 	}
 
 	for _, item := range menuItems {
