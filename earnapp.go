@@ -25,6 +25,7 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *t
 	form.AddInputField("UUID", i.UUID, 50, nil, func(text string) {
 		uuid = text
 	})
+	form.AddTextView("Attention", "The Claim URL will work only after the container has been started,\nso copy it and keep it in a safe place until you need it", 0, 0, true, false)
 	form.AddButton("Generate UUID", func() {
 		uuid = generateEarnAppUUID()
 		form.GetFormItemByLabel("UUID").(*tview.InputField).SetText(uuid)
