@@ -18,7 +18,7 @@ type HoneygainConfig struct {
 	Configured bool
 }
 
-func (i HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	email := ""
 	password := ""
 	deviceName := ""
@@ -53,7 +53,7 @@ func (i HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *
 	})
 }
 
-func (i HoneygainConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *HoneygainConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `honeygain:
@@ -89,6 +89,6 @@ func (i HoneygainConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.T
 	}
 }
 
-func (i HoneygainConfig) IsConfigured() bool {
+func (i *HoneygainConfig) IsConfigured() bool {
 	return i.Configured
 }

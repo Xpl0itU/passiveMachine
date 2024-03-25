@@ -18,7 +18,7 @@ type PawnsAppConfig struct {
 	Configured bool
 }
 
-func (i PawnsAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *PawnsAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	email := ""
 	password := ""
 	deviceName := ""
@@ -53,7 +53,7 @@ func (i PawnsAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *t
 	})
 }
 
-func (i PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `pawnsapp:
@@ -82,6 +82,6 @@ func (i PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
 	}
 }
 
-func (i PawnsAppConfig) IsConfigured() bool {
+func (i *PawnsAppConfig) IsConfigured() bool {
 	return i.Configured
 }

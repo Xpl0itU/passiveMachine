@@ -16,7 +16,7 @@ type MystConfig struct {
 	Configured bool
 }
 
-func (i MystConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *MystConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	enabled := i.Configured
 	form.AddCheckbox("Enable Myst", i.Configured, func(checked bool) {
 		enabled = checked
@@ -30,7 +30,7 @@ func (i MystConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview
 	})
 }
 
-func (i MystConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `myst:
@@ -74,6 +74,6 @@ func (i MystConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextVi
 	return "", errors.New("unknown kind")
 }
 
-func (i MystConfig) IsConfigured() bool {
+func (i *MystConfig) IsConfigured() bool {
 	return i.Configured
 }

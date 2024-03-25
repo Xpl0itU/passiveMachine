@@ -22,7 +22,7 @@ type EarnAppConfig struct {
 	Configured bool
 }
 
-func (i EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	uuid := ""
 	isError := false
 	showingError := false
@@ -63,7 +63,7 @@ func (i EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tv
 	})
 }
 
-func (i EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `earnapp:
@@ -101,7 +101,7 @@ func (i EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.Tex
 	}
 }
 
-func (i EarnAppConfig) IsConfigured() bool {
+func (i *EarnAppConfig) IsConfigured() bool {
 	return i.Configured
 }
 

@@ -16,7 +16,7 @@ type PacketStreamConfig struct {
 	Configured bool
 }
 
-func (i PacketStreamConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	cid := ""
 	isError := false
 	showingError := false
@@ -41,7 +41,7 @@ func (i PacketStreamConfig) ConfigureForm(form *tview.Form, list *tview.List, ap
 	})
 }
 
-func (i PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `packetstream:
@@ -68,6 +68,6 @@ func (i PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, logView *tvie
 	}
 }
 
-func (i PacketStreamConfig) IsConfigured() bool {
+func (i *PacketStreamConfig) IsConfigured() bool {
 	return i.Configured
 }

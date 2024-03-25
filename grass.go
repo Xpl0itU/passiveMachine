@@ -17,7 +17,7 @@ type GrassConfig struct {
 	Configured bool
 }
 
-func (i GrassConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *GrassConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	email := ""
 	password := ""
 	isError := false
@@ -47,7 +47,7 @@ func (i GrassConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tvie
 	})
 }
 
-func (i GrassConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `grass:
@@ -76,6 +76,6 @@ func (i GrassConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextV
 	}
 }
 
-func (i GrassConfig) IsConfigured() bool {
+func (i *GrassConfig) IsConfigured() bool {
 	return i.Configured
 }
