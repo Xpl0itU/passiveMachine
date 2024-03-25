@@ -17,6 +17,7 @@ func main() {
 		{"EarnApp", "Earn passive income by sharing your internet connection", EarnAppConfig{}},
 		{"PawnsApp", "Earn passive income by sharing your internet connection", PawnsAppConfig{}},
 		{"PacketStream", "Earn passive income by sharing your internet connection", PacketStreamConfig{}},
+		{"Grass", "Earn passive income by sharing your internet connection", GrassConfig{}},
 	}
 
 	for _, item := range menuItems {
