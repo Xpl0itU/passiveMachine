@@ -21,6 +21,7 @@ type HoneygainItem struct {
 	Name        string
 	Description string
 	Config      HoneygainConfig
+	Configured  bool
 }
 
 func (i *HoneygainItem) GetName() string {
@@ -54,6 +55,7 @@ func (i *HoneygainItem) ConfigureForm(form *tview.Form, list *tview.List, app *t
 		i.Config.Email = email
 		i.Config.Password = password
 		i.Config.DeviceName = deviceName
+		i.Configured = true
 		returnToMenu(list, app)
 	})
 	form.AddButton("Cancel", func() {
@@ -95,4 +97,8 @@ func (i *HoneygainItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
 	default:
 		return "", errors.New("unknown kind")
 	}
+}
+
+func (i *HoneygainItem) IsConfigured() bool {
+	return i.Configured
 }

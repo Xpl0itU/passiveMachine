@@ -21,6 +21,7 @@ type PawnsAppItem struct {
 	Name        string
 	Description string
 	Config      PawnsAppConfig
+	Configured  bool
 }
 
 func (i *PawnsAppItem) GetName() string {
@@ -54,6 +55,7 @@ func (i *PawnsAppItem) ConfigureForm(form *tview.Form, list *tview.List, app *tv
 		i.Config.Email = email
 		i.Config.Password = password
 		i.Config.DeviceName = deviceName
+		i.Configured = true
 		returnToMenu(list, app)
 	})
 	form.AddButton("Cancel", func() {
@@ -88,4 +90,8 @@ func (i *PawnsAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Tex
 	default:
 		return "", errors.New("unknown kind")
 	}
+}
+
+func (i *PawnsAppItem) IsConfigured() bool {
+	return i.Configured
 }

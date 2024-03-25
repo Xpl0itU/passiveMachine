@@ -25,6 +25,7 @@ type EarnAppItem struct {
 	Name        string
 	Description string
 	Config      EarnAppConfig
+	Configured  bool
 }
 
 func (i *EarnAppItem) GetName() string {
@@ -64,6 +65,7 @@ func (i *EarnAppItem) ConfigureForm(form *tview.Form, list *tview.List, app *tvi
 			return
 		}
 		i.Config.UUID = uuid
+		i.Configured = true
 		returnToMenu(list, app)
 	})
 	form.AddButton("Cancel", func() {
@@ -107,6 +109,10 @@ func (i *EarnAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Text
 	default:
 		return "", errors.New("unknown kind")
 	}
+}
+
+func (i *EarnAppItem) IsConfigured() bool {
+	return i.Configured
 }
 
 func randomString(length int) string {

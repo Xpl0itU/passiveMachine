@@ -34,6 +34,9 @@ func buildDockerComposeFile(menuItems []MenuItem) string {
 services:
 `
 	for _, item := range menuItems {
+		if !item.IsConfigured() {
+			continue
+		}
 		dockerCompose, err := item.ConfigureDocker(KIND_DOCKER_COMPOSE, nil)
 		if err != nil {
 			continue
@@ -46,6 +49,9 @@ services:
 func batchCreateDockerContainers(menuItems []MenuItem, logView *tview.TextView) []error {
 	var errors []error
 	for _, item := range menuItems {
+		if !item.IsConfigured() {
+			continue
+		}
 		_, err := item.ConfigureDocker(KIND_DIRECTLY_CONFIGURE_DOCKER, logView)
 		if err != nil {
 			errors = append(errors, err)

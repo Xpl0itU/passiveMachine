@@ -7,6 +7,7 @@ type MenuItem interface {
 	GetDescription() string
 	ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application)
 	ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error)
+	IsConfigured() bool
 }
 
 func returnToMenu(list *tview.List, app *tview.Application) {
