@@ -5,6 +5,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/rivo/tview"
+	"github.com/toqueteos/webbrowser"
 )
 
 const (
@@ -38,6 +39,9 @@ func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, list *tview.List, a
 	})
 	form.AddButton("Cancel", func() {
 		returnToMenu(list, app)
+	})
+	form.AddButton("Register", func() {
+		webbrowser.Open("https://packetstream.io/?psr=4cRE")
 	})
 }
 

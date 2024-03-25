@@ -6,6 +6,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/go-connections/nat"
 	"github.com/rivo/tview"
+	"github.com/toqueteos/webbrowser"
 )
 
 const (
@@ -27,6 +28,9 @@ func (i *MystConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tvie
 	})
 	form.AddButton("Cancel", func() {
 		returnToMenu(list, app)
+	})
+	form.AddButton("Register", func() {
+		webbrowser.Open("https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6")
 	})
 }
 

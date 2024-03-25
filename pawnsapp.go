@@ -5,6 +5,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/rivo/tview"
+	"github.com/toqueteos/webbrowser"
 )
 
 const (
@@ -50,6 +51,9 @@ func (i *PawnsAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *
 	})
 	form.AddButton("Cancel", func() {
 		returnToMenu(list, app)
+	})
+	form.AddButton("Register", func() {
+		webbrowser.Open("https://pawns.app/?r=1112060")
 	})
 }
 

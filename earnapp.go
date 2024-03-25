@@ -7,6 +7,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/mount"
 	"github.com/rivo/tview"
+	"github.com/toqueteos/webbrowser"
 )
 
 const (
@@ -57,6 +58,9 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *t
 	})
 	form.AddButton("Cancel", func() {
 		returnToMenu(list, app)
+	})
+	form.AddButton("Register", func() {
+		webbrowser.Open("https://earnapp.com/i/J9XF4PXJ")
 	})
 }
 

@@ -5,6 +5,7 @@ import (
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/rivo/tview"
+	"github.com/toqueteos/webbrowser"
 )
 
 const (
@@ -38,6 +39,9 @@ func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, list *tview.List, ap
 	})
 	form.AddButton("Cancel", func() {
 		returnToMenu(list, app)
+	})
+	form.AddButton("Register", func() {
+		webbrowser.Open("https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c")
 	})
 }
 

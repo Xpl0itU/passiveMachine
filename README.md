@@ -9,6 +9,7 @@ Passive Machine automatically sets up multiple Docker containers for passive inc
 - [Honeygain](https://r.honeygain.me/SAMUEC73)
 - [Mysterium Nodes](https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6)
 - [PacketStream](https://packetstream.io/?psr=4cRE)
+- [PawnsApp](https://pawns.app/?r=1112060)
 - [Peer2Profit](https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c)
 
 ## Requirements
