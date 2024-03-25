@@ -65,12 +65,12 @@ func (i *PawnsAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.Tex
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `pawnsapp:
-		  image: ` + PAWNSAPP_IMAGE_NAME + `
-		  environment:
-		    - IPROYALPAWNS_DUMMY=''
-		  command: -accept-tos -email=` + i.Config.Email + ` -password=` + i.Config.Password + ` -device-name=` + i.Config.DeviceName + ` -device-id=id_` + i.Config.DeviceName + `
-		  restart: unless-stopped
-		  `, nil
+  image: ` + PAWNSAPP_IMAGE_NAME + `
+  environment:
+   - IPROYALPAWNS_DUMMY=''
+  command: -accept-tos -email=` + i.Config.Email + ` -password=` + i.Config.Password + ` -device-name=` + i.Config.DeviceName + ` -device-id=id_` + i.Config.DeviceName + `
+  restart: unless-stopped
+`, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		containerConfig := &container.Config{
 			Image: PAWNSAPP_IMAGE_NAME,
