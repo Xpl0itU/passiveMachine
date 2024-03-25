@@ -8,30 +8,30 @@ import (
 )
 
 const (
-	HONEYGAIN_IMAGE_NAME = "honeygain/honeygain:latest"
+	PAWNSAPP_IMAGE_NAME = "iproyal/pawns-cli:latest"
 )
 
-type HoneygainConfig struct {
-	DeviceName string
+type PawnsAppConfig struct {
 	Email      string
 	Password   string
+	DeviceName string
 }
 
-type HoneygainItem struct {
+type PawnsAppItem struct {
 	Name        string
 	Description string
-	Config      HoneygainConfig
+	Config      PawnsAppConfig
 }
 
-func (i *HoneygainItem) GetName() string {
+func (i *PawnsAppItem) GetName() string {
 	return i.Name
 }
 
-func (i *HoneygainItem) GetDescription() string {
+func (i *PawnsAppItem) GetDescription() string {
 	return i.Description
 }
 
-func (i *HoneygainItem) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
+func (i *PawnsAppItem) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	email := ""
 	password := ""
 	deviceName := ""
@@ -61,37 +61,30 @@ func (i *HoneygainItem) ConfigureForm(form *tview.Form, list *tview.List, app *t
 	})
 }
 
-func (i *HoneygainItem) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *PawnsAppItem) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
-		return `honeygain:
-  image: ` + HONEYGAIN_IMAGE_NAME + `
-  restart: unless-stopped
-  environment:
-	- HONEYGAIN_DUMMY=''
-  command: -tou-accept -email ` + i.Config.Email + ` -pass ` + i.Config.Password + ` -device ` + i.Config.DeviceName + "\n", nil
+		return `pawnsapp:
+		  image: ` + PAWNSAPP_IMAGE_NAME + `
+		  environment:
+		    - IPROYALPAWNS_DUMMY=''
+		  command: -accept-tos -email=` + i.Config.Email + ` -password=` + i.Config.Password + ` -device-name=` + i.Config.DeviceName + ` -device-id=id_` + i.Config.DeviceName + `
+		  restart: unless-stopped
+		  `, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
+		containerConfig := &container.Config{
+			Image: PAWNSAPP_IMAGE_NAME,
+			Cmd:   []string{"-accept-tos", "-email=" + i.Config.Email, "-password=" + i.Config.Password, "-device-name=" + i.Config.DeviceName, "-device-id=id_" + i.Config.DeviceName},
+			Env: []string{
+				"IPROYALPAWNS_DUMMY=",
+			},
+		}
 		hostConfig := &container.HostConfig{
 			RestartPolicy: container.RestartPolicy{
 				Name: "unless-stopped",
 			},
 		}
-		containerConfig := &container.Config{
-			Image: HONEYGAIN_IMAGE_NAME,
-			Env: []string{
-				"HONEYGAIN_DUMMY=",
-			},
-			Cmd: []string{
-				"-tou-accept",
-				"-email",
-				i.Config.Email,
-				"-pass",
-				i.Config.Password,
-				"-device",
-				i.Config.DeviceName,
-			},
-		}
-		return "", createContainer("honeygain", containerConfig, hostConfig, logView)
+		return "", createContainer("pawnsapp", containerConfig, hostConfig, logView)
 	default:
 		return "", errors.New("unknown kind")
 	}
