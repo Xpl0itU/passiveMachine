@@ -1,11 +1,7 @@
 package main
 
 import (
-	"crypto/md5"
 	"errors"
-	"fmt"
-	"math/rand"
-	"time"
 
 	"github.com/atotto/clipboard"
 	"github.com/docker/docker/api/types/container"
@@ -103,19 +99,4 @@ func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
 
 func (i *EarnAppConfig) IsConfigured() bool {
 	return i.Configured
-}
-
-func randomString(length int) string {
-	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
-
-	b := make([]byte, length)
-	for i := range b {
-		b[i] = charset[seededRand.Intn(len(charset))]
-	}
-	return string(b)
-}
-
-func generateEarnAppUUID() string {
-	return fmt.Sprintf("sdk-node-%x", md5.Sum([]byte(randomString(32))))
 }
