@@ -23,6 +23,7 @@ func (i HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *
 	password := ""
 	deviceName := ""
 	isError := false
+	showingError := false
 	form.AddInputField("Device Name", i.DeviceName, 15, nil, func(text string) {
 		deviceName = text
 	})
@@ -33,9 +34,12 @@ func (i HoneygainConfig) ConfigureForm(form *tview.Form, list *tview.List, app *
 		password = text
 	})
 	form.AddButton("Save", func() {
-		if !isError && (stringIsEmpty(email) || stringIsEmpty(password) || stringIsEmpty(deviceName)) {
-			form.AddTextView("Error", "All fields are required", 0, 1, true, true)
-			isError = true
+		isError = stringIsEmpty(email) || stringIsEmpty(password) || stringIsEmpty(deviceName)
+		if isError {
+			if !showingError {
+				form.AddTextView("Error", "All fields are required", 0, 1, true, true)
+				showingError = true
+			}
 			return
 		}
 		i.Email = email

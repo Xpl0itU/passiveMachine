@@ -25,6 +25,7 @@ type EarnAppConfig struct {
 func (i EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tview.Application) {
 	uuid := ""
 	isError := false
+	showingError := false
 	form.AddInputField("UUID", i.UUID, 50, nil, func(text string) {
 		uuid = text
 	})
@@ -45,9 +46,12 @@ func (i EarnAppConfig) ConfigureForm(form *tview.Form, list *tview.List, app *tv
 		}
 	})
 	form.AddButton("Save", func() {
-		if !isError && stringIsEmpty(uuid) {
-			form.AddTextView("Error", "All fields are required", 0, 1, true, true)
-			isError = true
+		isError = stringIsEmpty(uuid)
+		if isError {
+			if !showingError {
+				form.AddTextView("Error", "All fields are required", 0, 1, true, true)
+				showingError = true
+			}
 			return
 		}
 		i.UUID = uuid
