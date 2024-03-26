@@ -24,6 +24,7 @@ func main() {
 		{"Grass", "Earn passive income by sharing your internet connection", &GrassConfig{}},
 		{"Mysterium", "Earn passive income by sharing your internet connection", &MystConfig{}},
 		{"Peer2Profit", "Earn passive income by sharing your internet connection", &Peer2ProfitConfig{}},
+		{"Watchtower (Automatic Updates) (Recommended)", "Automatically update your docker containers", &WatchtowerConfig{Configured: true}},
 	}
 
 	for _, item := range menuItems {
