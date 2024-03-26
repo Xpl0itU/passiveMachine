@@ -46,13 +46,13 @@ services:
 	return dockerComposeFile
 }
 
-func batchCreateDockerContainers(menuItems []MenuItem, logView *tview.TextView) []error {
+func batchCreateDockerContainers(menuItems []MenuItem, frame *tview.Frame) []error {
 	var errors []error
 	for _, item := range menuItems {
 		if !item.Config.IsConfigured() {
 			continue
 		}
-		_, err := item.Config.ConfigureDocker(KIND_DIRECTLY_CONFIGURE_DOCKER, logView)
+		_, err := item.Config.ConfigureDocker(KIND_DIRECTLY_CONFIGURE_DOCKER, frame)
 		if err != nil {
 			errors = append(errors, err)
 		}
@@ -94,11 +94,13 @@ func pullImageBlocking(imageName string, logView *tview.TextView) error {
 	return nil
 }
 
-func createContainer(name string, containerConfig *container.Config, hostConfig *container.HostConfig, logView *tview.TextView) error {
+func createContainer(name string, containerConfig *container.Config, hostConfig *container.HostConfig, frame *tview.Frame) error {
 	client, err := getDockerClient()
 	if err != nil {
 		return err
 	}
+
+	logView := frame.GetPrimitive().(*tview.TextView)
 
 	if err := pullImageBlocking(containerConfig.Image, logView); err != nil {
 		return err

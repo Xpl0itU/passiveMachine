@@ -45,7 +45,7 @@ func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, frame *tview.Frame,
 	})
 }
 
-func (i *PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `packetstream:
@@ -66,7 +66,7 @@ func (i *PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, logView *tvi
 				Name: "unless-stopped",
 			},
 		}
-		return "", createContainer("packetstream", containerConfig, hostConfig, logView)
+		return "", createContainer("packetstream", containerConfig, hostConfig, frame)
 	default:
 		return "", errors.New("unknown kind")
 	}

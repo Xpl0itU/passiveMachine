@@ -51,7 +51,7 @@ func (i *GrassConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *t
 	})
 }
 
-func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `grass:
@@ -74,7 +74,7 @@ func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.Text
 				Name: "unless-stopped",
 			},
 		}
-		return "", createContainer("grass", containerConfig, hostConfig, logView)
+		return "", createContainer("grass", containerConfig, hostConfig, frame)
 	default:
 		return "", errors.New("unknown kind")
 	}

@@ -34,7 +34,7 @@ func (i *MystConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tv
 	})
 }
 
-func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `myst:
@@ -73,7 +73,7 @@ func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextV
 				},
 			},
 		}
-		return "", createContainer("myst", containerConfig, hostConfig, logView)
+		return "", createContainer("myst", containerConfig, hostConfig, frame)
 	}
 	return "", errors.New("unknown kind")
 }

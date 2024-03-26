@@ -14,7 +14,7 @@ func main() {
 
 	form := tview.NewForm()
 
-	frame := tview.NewFrame(list).
+	mainFrame := tview.NewFrame(list).
 		AddText("Passive Machine", true, tview.AlignCenter, tview.Styles.PrimaryTextColor).
 		AddText("Tip: Use the Register button to sign up for the service", true, tview.AlignCenter, tview.Styles.ContrastSecondaryTextColor)
 
@@ -32,7 +32,7 @@ func main() {
 	for _, item := range menuItems {
 		list.AddItem(item.GetName(), item.GetDescription(), 0, func() {
 			form.Clear(true)
-			item.Config.ConfigureForm(form, frame, app)
+			item.Config.ConfigureForm(form, mainFrame, app)
 			app.SetRoot(form, true)
 		})
 	}
@@ -49,28 +49,35 @@ func main() {
 			}
 		})
 		form.AddButton("Return", func() {
-			returnToMenu(frame, app)
+			returnToMenu(mainFrame, app)
 		})
 		app.SetRoot(form, true)
 	})
 
 	list.AddItem("[*] Create Docker Containers", "Create docker containers from the selected items (Recommended)", 0, func() {
-		logView := tview.NewTextView()
-		form.Clear(true)
-		form.AddFormItem(logView)
-		errors := batchCreateDockerContainers(menuItems, logView)
-		if len(errors) == 0 {
-			form.AddTextView("Success", "All containers created successfully", 0, 0, true, false)
-		} else {
-			form.AddTextView("Errors", "Some containers failed to create", 0, 0, true, false)
-			for _, err := range errors {
-				form.AddTextView("Error", err.Error(), 0, 1, true, false)
+		dockerFrame := tview.NewFrame(tview.NewTextView().
+			SetDynamicColors(true).
+			SetChangedFunc(func() {
+				app.Draw()
+			})).
+			AddText("Creating Docker Containers", true, tview.AlignCenter, tview.Styles.PrimaryTextColor).
+			AddText("This may take a while", true, tview.AlignCenter, tview.Styles.ContrastSecondaryTextColor)
+
+		go func() {
+			errors := batchCreateDockerContainers(menuItems, dockerFrame)
+			if len(errors) == 0 {
+				form.AddTextView("Success", "All containers created successfully", 0, 0, true, false)
+			} else {
+				form.AddTextView("Errors", "Some containers failed to create", 0, 0, true, false)
+				for _, err := range errors {
+					form.AddTextView("Error", err.Error(), 0, 1, true, false)
+				}
 			}
-		}
-		form.AddButton("Return", func() {
-			returnToMenu(frame, app)
-		})
-		app.SetRoot(form, true)
+			form.AddButton("Return", func() {
+				returnToMenu(mainFrame, app)
+			})
+		}()
+		app.SetRoot(dockerFrame, true)
 	})
-	app.SetRoot(frame, true).Run()
+	app.SetRoot(mainFrame, true).Run()
 }

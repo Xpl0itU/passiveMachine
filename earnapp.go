@@ -64,7 +64,7 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app 
 	})
 }
 
-func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
+func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `earnapp:
@@ -96,7 +96,7 @@ func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.Te
 				},
 			},
 		}
-		return "", createContainer("earnapp", containerConfig, hostConfig, logView)
+		return "", createContainer("earnapp", containerConfig, hostConfig, frame)
 	default:
 		return "", errors.New("unknown kind")
 	}
