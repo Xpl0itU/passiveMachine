@@ -42,6 +42,7 @@ func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (s
   environment:
     - MYSTNODE_DUMMY=''
   command: service --agreed-terms-and-conditions
+  network_mode: host
   cap_add:
     - NET_ADMIN
   ports:
@@ -57,17 +58,19 @@ func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (s
 				"MYSTNODE_DUMMY=",
 			},
 			Cmd: []string{"service", "--agreed-terms-and-conditions"},
+			Volumes: map[string]struct{}{
+				"/var/lib/mysterium-node": {},
+			},
 		}
 		hostConfig := &container.HostConfig{
-			VolumesFrom: []string{"myst-data"},
 			RestartPolicy: container.RestartPolicy{
 				Name: "unless-stopped",
 			},
-			CapAdd: []string{"NET_ADMIN"},
+			CapAdd:      []string{"NET_ADMIN"},
+			NetworkMode: "host",
 			PortBindings: map[nat.Port][]nat.PortBinding{
-				"4449/tcp": {
+				nat.Port("4449/tcp"): {
 					{
-						HostIP:   "0.0.0.0",
 						HostPort: "4449",
 					},
 				},
@@ -83,4 +86,7 @@ func (i *MystConfig) IsConfigured() bool {
 }
 
 func (i *MystConfig) PostConfigure(form *tview.Form, app *tview.Application) {
+	form.AddButton("Open Myst Node URL", func() {
+		webbrowser.Open("http://127.0.0.1:4449/")
+	})
 }
