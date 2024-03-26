@@ -59,10 +59,10 @@ func (i *PacketStreamConfig) ConfigureDocker(kind DockerConfigKind, form *tview.
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `packetstream:
-  image: ` + PACKETSTREAM_IMAGE_NAME + `
-  environment:
-	- CID=` + i.CID + `
-  restart: unless-stopped
+	image: ` + PACKETSTREAM_IMAGE_NAME + `
+	environment:
+		- CID=` + i.CID + `
+	restart: unless-stopped
 `, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		containerConfig := &container.Config{

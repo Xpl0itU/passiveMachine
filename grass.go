@@ -65,11 +65,11 @@ func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `grass:
-  image: ` + GRASS_IMAGE_NAME + `
-  environment:
-	- GRASS_USER=` + i.Email + `
-	- GRASS_PASS=` + i.Password + `
-  restart: unless-stopped
+	image: ` + GRASS_IMAGE_NAME + `
+	environment:
+		- GRASS_USER=` + i.Email + `
+		- GRASS_PASS=` + i.Password + `
+	restart: unless-stopped
 `, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		containerConfig := &container.Config{

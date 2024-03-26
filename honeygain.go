@@ -71,11 +71,11 @@ func (i *HoneygainConfig) ConfigureDocker(kind DockerConfigKind, form *tview.For
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `honeygain:
-  image: ` + HONEYGAIN_IMAGE_NAME + `
-  restart: unless-stopped
-  environment:
-	- HONEYGAIN_DUMMY=''
-  command: -tou-accept -email ` + i.Email + ` -pass ` + i.Password + ` -device ` + i.DeviceName + "\n", nil
+	image: ` + HONEYGAIN_IMAGE_NAME + `
+	restart: unless-stopped
+	environment:
+		- HONEYGAIN_DUMMY=''
+	command: -tou-accept -email ` + i.Email + ` -pass ` + i.Password + ` -device ` + i.DeviceName + "\n", nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		hostConfig := &container.HostConfig{
 			RestartPolicy: container.RestartPolicy{

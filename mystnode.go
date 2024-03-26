@@ -48,18 +48,18 @@ func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (s
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `myst:
-  image: ` + MYST_IMAGE_NAME + `
-  environment:
-    - MYSTNODE_DUMMY=''
-  command: service --agreed-terms-and-conditions
-  network_mode: host
-  cap_add:
-    - NET_ADMIN
-  ports:
-    - "4449:4449"
-  volumes:
-    - myst-data:/var/lib/mysterium-node
-  restart: unless-stopped
+	image: ` + MYST_IMAGE_NAME + `
+	environment:
+		- MYSTNODE_DUMMY=''
+	command: service --agreed-terms-and-conditions
+	network_mode: host
+	cap_add:
+		- NET_ADMIN
+	ports:
+		- "4449:4449"
+	volumes:
+		- myst-data:/var/lib/mysterium-node
+	restart: unless-stopped
 `, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		containerConfig := &container.Config{

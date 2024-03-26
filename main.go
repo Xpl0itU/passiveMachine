@@ -48,6 +48,13 @@ func main() {
 				form.AddTextView("Success", "Copied to clipboard", 0, 1, true, false)
 			}
 		})
+		form.AddButton("Save to File", func() {
+			if err := saveToFile("compose.yml", dockerComposeFile); err != nil {
+				form.AddTextView("Error", "Failed to save to file", 0, 1, true, false)
+			} else {
+				form.AddTextView("Success", "Saved to file", 0, 1, true, false)
+			}
+		})
 		form.AddButton("Return", func() {
 			returnToMenu(mainFrame, app)
 		})

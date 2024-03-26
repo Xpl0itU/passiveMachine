@@ -33,10 +33,10 @@ func (i *WatchtowerConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Fo
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `watchtower:
-  image: ` + WATCHTOWER_IMAGE_NAME + `
-  volumes:
-	- /var/run/docker.sock:/var/run/docker.sock
-  restart: always
+	image: ` + WATCHTOWER_IMAGE_NAME + `
+	volumes:
+		- /var/run/docker.sock:/var/run/docker.sock
+	restart: always
 `, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		containerConfig := &container.Config{

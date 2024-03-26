@@ -86,13 +86,13 @@ func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form)
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `earnapp:
-  image: ` + EARNAPP_IMAGE_NAME + `
-  environment:
-    - EARNAPP_UUID=` + i.UUID + `
-    - EARNAPP_TERM="yes"
-  volumes:
-    - earnapp-data:/etc/earnapp
-  restart: unless-stopped
+	image: ` + EARNAPP_IMAGE_NAME + `
+	environment:
+		- EARNAPP_UUID=` + i.UUID + `
+		- EARNAPP_TERM="yes"
+	volumes:
+		- earnapp-data:/etc/earnapp
+	restart: unless-stopped
 `, nil
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
 		containerConfig := &container.Config{

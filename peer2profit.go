@@ -60,19 +60,19 @@ func (i *Peer2ProfitConfig) ConfigureDocker(kind DockerConfigKind, form *tview.F
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		compose := `peer2profit:
-  image: ` + PEER2PROFIT_IMAGE_NAME + `
-  environment:
-	- email=` + i.Email + `
-    - use_proxy=false
-  restart: unless-stopped
-  platform: linux/amd64
+	image: ` + PEER2PROFIT_IMAGE_NAME + `
+	environment:
+		- email=` + i.Email + `
+		- use_proxy=false
+	restart: unless-stopped
+	platform: linux/amd64
 `
 		if runtime.GOARCH == "arm64" {
 			return compose + `binfmt:
-  image: tonistiigi/binfmt:latest
-  privileged: true
-  command: --install all
-  restart: unless-stopped
+	image: tonistiigi/binfmt:latest
+	privileged: true
+	command: --install all
+	restart: unless-stopped
 `, nil
 		}
 		return compose, nil

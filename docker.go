@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"strings"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/image"
@@ -41,7 +42,9 @@ services:
 		if err != nil {
 			continue
 		}
-		dockerComposeFile += dockerCompose
+		for _, line := range strings.Split(dockerCompose, "\n") {
+			dockerComposeFile += "\t" + line + "\n"
+		}
 	}
 	return dockerComposeFile
 }
