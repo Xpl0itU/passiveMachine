@@ -6,7 +6,9 @@ import (
 )
 
 func main() {
-	app := tview.NewApplication().EnablePaste(true)
+	app := tview.NewApplication().
+		EnablePaste(true).
+		EnableMouse(true)
 
 	list := tview.NewList()
 
