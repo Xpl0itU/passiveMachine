@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"runtime"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/rivo/tview"
@@ -48,14 +49,41 @@ func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, 
 func (i *Peer2ProfitConfig) ConfigureDocker(kind DockerConfigKind, logView *tview.TextView) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
-		return `peer2profit:
+		compose := `peer2profit:
   image: ` + PEER2PROFIT_IMAGE_NAME + `
   environment:
 	- email=` + i.Email + `
     - use_proxy=false
   restart: unless-stopped
+  platform: linux/amd64
+`
+		if runtime.GOARCH == "arm64" {
+			return compose + `binfmt:
+  image: tonistiigi/binfmt:latest
+  privileged: true
+  command: --install all
+  restart: unless-stopped
 `, nil
+		}
+		return compose, nil
+
 	case KIND_DIRECTLY_CONFIGURE_DOCKER:
+		if runtime.GOARCH == "arm64" {
+			containerConfig := &container.Config{
+				Image: "tonistiigi/binfmt:latest",
+				Env:   []string{},
+				Cmd:   []string{"--install", "all"},
+			}
+			hostConfig := &container.HostConfig{
+				Privileged: true,
+				RestartPolicy: container.RestartPolicy{
+					Name: "unless-stopped",
+				},
+			}
+			if err := createContainer("binfmt", containerConfig, hostConfig, logView); err != nil {
+				return "", err
+			}
+		}
 		containerConfig := &container.Config{
 			Image: PEER2PROFIT_IMAGE_NAME,
 			Env: []string{
