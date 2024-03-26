@@ -46,13 +46,13 @@ services:
 	return dockerComposeFile
 }
 
-func batchCreateDockerContainers(menuItems []MenuItem, frame *tview.Frame) []error {
+func batchCreateDockerContainers(menuItems []MenuItem, form *tview.Form) []error {
 	var errors []error
 	for _, item := range menuItems {
 		if !item.Config.IsConfigured() {
 			continue
 		}
-		_, err := item.Config.ConfigureDocker(KIND_DIRECTLY_CONFIGURE_DOCKER, frame)
+		_, err := item.Config.ConfigureDocker(KIND_DIRECTLY_CONFIGURE_DOCKER, form)
 		if err != nil {
 			errors = append(errors, err)
 		}
@@ -94,13 +94,13 @@ func pullImageBlocking(imageName string, logView *tview.TextView) error {
 	return nil
 }
 
-func createContainer(name string, containerConfig *container.Config, hostConfig *container.HostConfig, frame *tview.Frame) error {
+func createContainer(name string, containerConfig *container.Config, hostConfig *container.HostConfig, form *tview.Form) error {
 	client, err := getDockerClient()
 	if err != nil {
 		return err
 	}
 
-	logView := frame.GetPrimitive().(*tview.TextView)
+	logView := form.GetFormItemByLabel("").(*tview.TextView)
 
 	if err := pullImageBlocking(containerConfig.Image, logView); err != nil {
 		return err
@@ -111,7 +111,7 @@ func createContainer(name string, containerConfig *container.Config, hostConfig 
 		return err
 	}
 	for _, warning := range out.Warnings {
-		logView.Write([]byte(warning))
+		logView.Write([]byte(warning + "\n"))
 		logView.ScrollToEnd()
 	}
 	return client.ContainerStart(context.Background(), out.ID, container.StartOptions{})

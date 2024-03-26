@@ -46,7 +46,7 @@ func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, 
 	})
 }
 
-func (i *Peer2ProfitConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *Peer2ProfitConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		compose := `peer2profit:
@@ -80,7 +80,7 @@ func (i *Peer2ProfitConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.
 					Name: "unless-stopped",
 				},
 			}
-			if err := createContainer("binfmt", containerConfig, hostConfig, frame); err != nil {
+			if err := createContainer("binfmt", containerConfig, hostConfig, form); err != nil {
 				return "", err
 			}
 		}
@@ -96,11 +96,14 @@ func (i *Peer2ProfitConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.
 				Name: "unless-stopped",
 			},
 		}
-		return "", createContainer("peer2profit", containerConfig, hostConfig, frame)
+		return "", createContainer("peer2profit", containerConfig, hostConfig, form)
 	}
 	return "", errors.New("unknown kind")
 }
 
 func (i *Peer2ProfitConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *Peer2ProfitConfig) PostConfigure(form *tview.Form, app *tview.Application) {
 }

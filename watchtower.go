@@ -29,7 +29,7 @@ func (i *WatchtowerConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, a
 	})
 }
 
-func (i *WatchtowerConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *WatchtowerConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `watchtower:
@@ -50,7 +50,7 @@ func (i *WatchtowerConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.F
 				Name: "always",
 			},
 		}
-		return "", createContainer("watchtower", containerConfig, hostConfig, frame)
+		return "", createContainer("watchtower", containerConfig, hostConfig, form)
 	default:
 		return "", errors.New("unknown kind")
 	}
@@ -58,4 +58,7 @@ func (i *WatchtowerConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.F
 
 func (i *WatchtowerConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *WatchtowerConfig) PostConfigure(form *tview.Form, app *tview.Application) {
 }

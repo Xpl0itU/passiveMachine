@@ -51,7 +51,7 @@ func (i *GrassConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *t
 	})
 }
 
-func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `grass:
@@ -74,7 +74,7 @@ func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame)
 				Name: "unless-stopped",
 			},
 		}
-		return "", createContainer("grass", containerConfig, hostConfig, frame)
+		return "", createContainer("grass", containerConfig, hostConfig, form)
 	default:
 		return "", errors.New("unknown kind")
 	}
@@ -82,4 +82,7 @@ func (i *GrassConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame)
 
 func (i *GrassConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *GrassConfig) PostConfigure(form *tview.Form, app *tview.Application) {
 }

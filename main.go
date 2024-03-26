@@ -55,18 +55,27 @@ func main() {
 	})
 
 	list.AddItem("[*] Create Docker Containers", "Create docker containers from the selected items (Recommended)", 0, func() {
-		dockerFrame := tview.NewFrame(tview.NewTextView().
-			SetDynamicColors(true).
-			SetChangedFunc(func() {
-				app.Draw()
-			})).
-			AddText("Creating Docker Containers", true, tview.AlignCenter, tview.Styles.PrimaryTextColor).
-			AddText("This may take a while", true, tview.AlignCenter, tview.Styles.ContrastSecondaryTextColor)
+		form.
+			Clear(true).
+			SetTitle("Creating Docker Containers").
+			SetBorder(true).
+			SetTitleAlign(tview.AlignCenter)
+		form.
+			AddTextView("", "", 0, 0, true, true)
+		logView := form.GetFormItemByLabel("").(*tview.TextView)
+		logView.SetChangedFunc(func() {
+			app.Draw()
+		})
 
 		go func() {
-			errors := batchCreateDockerContainers(menuItems, dockerFrame)
+			errors := batchCreateDockerContainers(menuItems, form)
 			if len(errors) == 0 {
 				form.AddTextView("Success", "All containers created successfully", 0, 0, true, false)
+				for _, item := range menuItems {
+					if item.Config.IsConfigured() {
+						item.Config.PostConfigure(form, app)
+					}
+				}
 			} else {
 				form.AddTextView("Errors", "Some containers failed to create", 0, 0, true, false)
 				for _, err := range errors {
@@ -76,8 +85,9 @@ func main() {
 			form.AddButton("Return", func() {
 				returnToMenu(mainFrame, app)
 			})
+			app.Draw()
 		}()
-		app.SetRoot(dockerFrame, true)
+		app.SetRoot(form, true)
 	})
 	app.SetRoot(mainFrame, true).Run()
 }

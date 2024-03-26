@@ -57,7 +57,7 @@ func (i *PawnsAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app
 	})
 }
 
-func (i *PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `pawnsapp:
@@ -80,7 +80,7 @@ func (i *PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Fra
 				Name: "unless-stopped",
 			},
 		}
-		return "", createContainer("pawnsapp", containerConfig, hostConfig, frame)
+		return "", createContainer("pawnsapp", containerConfig, hostConfig, form)
 	default:
 		return "", errors.New("unknown kind")
 	}
@@ -88,4 +88,7 @@ func (i *PawnsAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Fra
 
 func (i *PawnsAppConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *PawnsAppConfig) PostConfigure(form *tview.Form, app *tview.Application) {
 }

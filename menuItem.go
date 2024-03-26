@@ -4,8 +4,9 @@ import "github.com/rivo/tview"
 
 type MenuItemConfig interface {
 	ConfigureForm(form *tview.Form, frame *tview.Frame, app *tview.Application)
-	ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error)
+	ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error)
 	IsConfigured() bool
+	PostConfigure(form *tview.Form, app *tview.Application)
 }
 
 type MenuItem struct {

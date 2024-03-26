@@ -34,7 +34,7 @@ func (i *MystConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tv
 	})
 }
 
-func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `myst:
@@ -73,11 +73,14 @@ func (i *MystConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) 
 				},
 			},
 		}
-		return "", createContainer("myst", containerConfig, hostConfig, frame)
+		return "", createContainer("myst", containerConfig, hostConfig, form)
 	}
 	return "", errors.New("unknown kind")
 }
 
 func (i *MystConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *MystConfig) PostConfigure(form *tview.Form, app *tview.Application) {
 }

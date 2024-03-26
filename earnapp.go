@@ -64,7 +64,7 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app 
 	})
 }
 
-func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `earnapp:
@@ -96,7 +96,7 @@ func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Fram
 				},
 			},
 		}
-		return "", createContainer("earnapp", containerConfig, hostConfig, frame)
+		return "", createContainer("earnapp", containerConfig, hostConfig, form)
 	default:
 		return "", errors.New("unknown kind")
 	}
@@ -104,4 +104,10 @@ func (i *EarnAppConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Fram
 
 func (i *EarnAppConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *EarnAppConfig) PostConfigure(form *tview.Form, app *tview.Application) {
+	form.AddButton("Open EarnApp Claim URL", func() {
+		webbrowser.Open("https://earnapp.com/r/" + i.UUID)
+	})
 }

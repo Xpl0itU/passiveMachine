@@ -57,7 +57,7 @@ func (i *HoneygainConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, ap
 	})
 }
 
-func (i *HoneygainConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Frame) (string, error) {
+func (i *HoneygainConfig) ConfigureDocker(kind DockerConfigKind, form *tview.Form) (string, error) {
 	switch kind {
 	case KIND_DOCKER_COMPOSE:
 		return `honeygain:
@@ -87,7 +87,7 @@ func (i *HoneygainConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Fr
 				i.DeviceName,
 			},
 		}
-		return "", createContainer("honeygain", containerConfig, hostConfig, frame)
+		return "", createContainer("honeygain", containerConfig, hostConfig, form)
 	default:
 		return "", errors.New("unknown kind")
 	}
@@ -95,4 +95,7 @@ func (i *HoneygainConfig) ConfigureDocker(kind DockerConfigKind, frame *tview.Fr
 
 func (i *HoneygainConfig) IsConfigured() bool {
 	return i.Configured
+}
+
+func (i *HoneygainConfig) PostConfigure(form *tview.Form, app *tview.Application) {
 }
