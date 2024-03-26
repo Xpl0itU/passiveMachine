@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	PACKETSTREAM_IMAGE_NAME = "packetstream/psclient:latest"
+	PACKETSTREAM_IMAGE_NAME    = "packetstream/psclient:latest"
+	PACKETSTREAM_REFERRAL_LINK = "https://packetstream.io/?psr=4cRE"
 )
 
 type PacketStreamConfig struct {
@@ -41,7 +42,16 @@ func (i *PacketStreamConfig) ConfigureForm(form *tview.Form, frame *tview.Frame,
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://packetstream.io/?psr=4cRE")
+		modal := tview.NewModal().
+			SetText("Register on PacketStream\n" + PACKETSTREAM_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(PACKETSTREAM_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 

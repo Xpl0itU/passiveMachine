@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	EARNAPP_IMAGE_NAME = "fazalfarhan01/earnapp:lite"
+	EARNAPP_IMAGE_NAME    = "fazalfarhan01/earnapp:lite"
+	EARNAPP_REFERRAL_LINK = "https://earnapp.com/i/J9XF4PXJ"
 )
 
 type EarnAppConfig struct {
@@ -31,17 +32,25 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app 
 		uuid = generateEarnAppUUID()
 		form.GetFormItemByLabel("UUID").(*tview.InputField).SetText(uuid)
 	})
-	form.AddButton("Copy Claim URL to Clipboard", func() {
-		if stringIsEmpty(uuid) {
-			form.AddTextView("Error", "UUID is required", 0, 1, true, true)
-			isError = true
-		} else {
-			if err := clipboard.WriteAll("https://earnapp.com/r/" + uuid); err != nil {
-				form.AddTextView("Error", "Failed to copy to clipboard", 0, 1, true, true)
-			} else {
-				form.AddTextView("Success", "Copied to clipboard", 0, 1, true, true)
+	form.AddButton("Claim URL", func() {
+		isError = stringIsEmpty(uuid)
+		if isError {
+			if !showingError {
+				form.AddTextView("Error", "UUID is required", 0, 1, true, true)
+				showingError = true
 			}
+			return
 		}
+		modal := tview.NewModal().
+			SetText("Claim URL:\nhttps://earnapp.com/r/" + uuid).
+			AddButtons([]string{"Copy", "Close"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Copy" {
+					clipboard.WriteAll("https://earnapp.com/r/" + uuid)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 	form.AddButton("Save", func() {
 		isError = stringIsEmpty(uuid)
@@ -60,7 +69,16 @@ func (i *EarnAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app 
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://earnapp.com/i/J9XF4PXJ")
+		modal := tview.NewModal().
+			SetText("Register on EarnApp\n" + EARNAPP_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(EARNAPP_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 

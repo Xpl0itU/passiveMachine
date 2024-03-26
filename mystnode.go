@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	MYST_IMAGE_NAME = "mysteriumnetwork/myst:latest"
+	MYST_IMAGE_NAME    = "mysteriumnetwork/myst:latest"
+	MYST_REFERRAL_LINK = "https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6"
 )
 
 type MystConfig struct {
@@ -30,7 +31,16 @@ func (i *MystConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *tv
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6")
+		modal := tview.NewModal().
+			SetText("Register on Mysterium Nodes\n" + MYST_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(MYST_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 

@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	PEER2PROFIT_IMAGE_NAME = "enwaiax/peer2profit:latest"
+	PEER2PROFIT_IMAGE_NAME    = "enwaiax/peer2profit:latest"
+	PEER2PROFIT_REFERRAL_LINK = "https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c"
 )
 
 type Peer2ProfitConfig struct {
@@ -42,7 +43,16 @@ func (i *Peer2ProfitConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, 
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c")
+		modal := tview.NewModal().
+			SetText("Register on Peer2Profit\n" + PEER2PROFIT_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(PEER2PROFIT_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 

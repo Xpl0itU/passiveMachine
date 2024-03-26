@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	GRASS_IMAGE_NAME = "mrcolorrain/grass:latest"
+	GRASS_IMAGE_NAME    = "mrcolorrain/grass:latest"
+	GRASS_REFERRAL_LINK = "https://app.getgrass.io/register/?referralCode=u154dPm508iVxXy"
 )
 
 type GrassConfig struct {
@@ -47,7 +48,16 @@ func (i *GrassConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app *t
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://app.getgrass.io/register/?referralCode=u154dPm508iVxXy")
+		modal := tview.NewModal().
+			SetText("Register on Grass\n" + GRASS_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(GRASS_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 

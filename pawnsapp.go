@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	PAWNSAPP_IMAGE_NAME = "iproyal/pawns-cli:latest"
+	PAWNSAPP_IMAGE_NAME    = "iproyal/pawns-cli:latest"
+	PAWNSAPP_REFERRAL_LINK = "https://pawns.app/?r=1112060"
 )
 
 type PawnsAppConfig struct {
@@ -53,7 +54,16 @@ func (i *PawnsAppConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, app
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://pawns.app/?r=1112060")
+		modal := tview.NewModal().
+			SetText("Register on PawnsApp\n" + PAWNSAPP_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(PAWNSAPP_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 

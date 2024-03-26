@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	HONEYGAIN_IMAGE_NAME = "honeygain/honeygain:latest"
+	HONEYGAIN_IMAGE_NAME    = "honeygain/honeygain:latest"
+	HONEYGAIN_REFERRAL_LINK = "https://r.honeygain.me/SAMUEC73"
 )
 
 type HoneygainConfig struct {
@@ -53,7 +54,16 @@ func (i *HoneygainConfig) ConfigureForm(form *tview.Form, frame *tview.Frame, ap
 		returnToMenu(frame, app)
 	})
 	form.AddButton("Register", func() {
-		webbrowser.Open("https://r.honeygain.me/SAMUEC73")
+		modal := tview.NewModal().
+			SetText("Register on Honeygain\n" + HONEYGAIN_REFERRAL_LINK).
+			AddButtons([]string{"Open", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Open" {
+					webbrowser.Open(HONEYGAIN_REFERRAL_LINK)
+				}
+				app.SetRoot(form, true)
+			})
+		app.SetRoot(modal, true)
 	})
 }
 
