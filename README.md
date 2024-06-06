@@ -19,10 +19,10 @@ These are the earnings yoy can realistically expect from each service, these are
 | [EarnApp](https://earnapp.com/i/J9XF4PXJ)         | Mobile and desktop app that rewards users for sharing their internet connection | $2.50 per month    |
 | [Grass](https://app.getgrass.io/register/?referralCode=u154dPm508iVxXy)           | Browser extension that rewards users for sharing their internet bandwidth | N/A (not live yet)    |
 | [Honeygain](https://r.honeygain.me/SAMUEC73)       | Mobile and desktop app that rewards users for sharing their internet connection     | $7 per month   |
-| [Mysterium Nodes](https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6) | Decentralized VPN network that rewards users for sharing their internet connection | $20-$50 per month   |
-| [PacketStream](https://packetstream.io/?psr=4cRE)    | Mobile app that rewards users for sharing their internet connection     | $2 per month   |
-| [PawnsApp](https://pawns.app/?r=1112060)        | Mobile app that rewards users for installing and running apps, watching videos, and completing tasks | $4 per month    |
-| [Peer2Profit](https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c)     | Mobile app that rewards users for sharing their internet connection     | $3 per month   |
+| [Mysterium Nodes](https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6) | Decentralized VPN network that rewards users for sharing their internet connection | $15-$30 per month   |
+| [PacketStream](https://packetstream.io/?psr=4cRE)    | Desktop app that rewards users for sharing their internet connection     | $2 per month   |
+| [PawnsApp](https://pawns.app/?r=1112060)        | Mobile and desktop app that rewards users for completing tasks and sharing their internet connection | $4 per month    |
+| [Peer2Profit](https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c)     | Mobile and desktop app that rewards users for sharing their internet connection     | $3 per month   |
 
 ## Requirements
 - Docker
