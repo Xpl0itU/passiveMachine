@@ -12,18 +12,6 @@ Passive Machine automatically sets up multiple Docker containers for passive inc
 - [PawnsApp](https://pawns.app/?r=1112060)
 - [Peer2Profit](https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c)
 
-## Expected Earnings
-These are the earnings yoy can realistically expect from each service, these are from personal experience with just one device and one IP address.
-| Service Name    | Description                                                             | Realistic Earnings  |
-| --------------- | ----------------------------------------------------------------------- | ------------------- |
-| [EarnApp](https://earnapp.com/i/J9XF4PXJ)         | Mobile and desktop app that rewards users for sharing their internet connection | $2.50 per month    |
-| [Grass](https://app.getgrass.io/register/?referralCode=u154dPm508iVxXy)           | Browser extension that rewards users for sharing their internet bandwidth | N/A (not live yet)    |
-| [Honeygain](https://r.honeygain.me/SAMUEC73)       | Mobile and desktop app that rewards users for sharing their internet connection     | $7 per month   |
-| [Mysterium Nodes](https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6) | Decentralized VPN network that rewards users for sharing their internet connection | $15-$30 per month   |
-| [PacketStream](https://packetstream.io/?psr=4cRE)    | Desktop app that rewards users for sharing their internet connection     | $2 per month   |
-| [PawnsApp](https://pawns.app/?r=1112060)        | Mobile and desktop app that rewards users for completing tasks and sharing their internet connection | $4 per month    |
-| [Peer2Profit](https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c)     | Mobile and desktop app that rewards users for sharing their internet connection     | $3 per month   |
-
 ## Requirements
 - Docker
 
@@ -41,6 +29,18 @@ That's it! As long as you have a working Docker install, everything will work ju
     - [x86_64 (you probably need this one)](https://github.com/Xpl0itU/passiveMachine/releases/latest/download/passiveMachine_Linux_x86_64.tar.gz)
     - [i386 (old 32-bit CPU)](https://github.com/Xpl0itU/passiveMachine/releases/latest/download/passiveMachine_Linux_i386.tar.gz)
     - [arm64 (notably Raspberry Pi's)](https://github.com/Xpl0itU/passiveMachine/releases/latest/download/passiveMachine_Linux_arm64.tar.gz)
+
+## Expected Earnings
+These are the earnings yoy can realistically expect from each service, these are from personal experience with just one device and one IP address.
+| Service Name    | Description                                                             | Realistic Earnings  |
+| --------------- | ----------------------------------------------------------------------- | ------------------- |
+| [EarnApp](https://earnapp.com/i/J9XF4PXJ)         | Mobile and desktop app that rewards users for sharing their internet connection | $2.50 per month    |
+| [Grass](https://app.getgrass.io/register/?referralCode=u154dPm508iVxXy)           | Browser extension that rewards users for sharing their internet bandwidth | N/A (not live yet)    |
+| [Honeygain](https://r.honeygain.me/SAMUEC73)       | Mobile and desktop app that rewards users for sharing their internet connection     | $7 per month   |
+| [Mysterium Nodes](https://mystnodes.co/?referral_code=ijIy8nJv8xqVoshRmJjKATvoZZYKZ3jhzOY3FWy6) | Decentralized VPN network that rewards users for sharing their internet connection | $15-$30 per month   |
+| [PacketStream](https://packetstream.io/?psr=4cRE)    | Desktop app that rewards users for sharing their internet connection     | $2 per month   |
+| [PawnsApp](https://pawns.app/?r=1112060)        | Mobile and desktop app that rewards users for completing tasks and sharing their internet connection | $4 per month    |
+| [Peer2Profit](https://t.me/peer2profit_app_bot?start=1671204644639c8f24d663c)     | Mobile and desktop app that rewards users for sharing their internet connection     | $3 per month   |
 
 ## Screenshots
 ![main menu](docs/mainMenu.png)
