@@ -31,7 +31,7 @@ That's it! As long as you have a working Docker install, everything will work ju
     - [arm64 (notably Raspberry Pi's)](https://github.com/Xpl0itU/passiveMachine/releases/latest/download/passiveMachine_Linux_arm64.tar.gz)
 
 ## Expected Earnings
-These are the earnings yoy can realistically expect from each service, these are from personal experience with just one device and one IP address.
+These are the earnings you can realistically expect from each service, these are from personal experience with just one device and one IP address.
 | Service Name    | Description                                                             | Realistic Earnings  |
 | --------------- | ----------------------------------------------------------------------- | ------------------- |
 | [EarnApp](https://earnapp.com/i/J9XF4PXJ)         | Mobile and desktop app that rewards users for sharing their internet connection | $2.50 per month    |
